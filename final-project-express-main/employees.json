@@ -1,0 +1,11 @@
+[
+{"type":"header","version":"5.2.1","comment":"Export to JSON plugin for PHPMyAdmin"},
+{"type":"database","name":"employees"},
+{"type":"table","name":"employees","database":"employees","data":
+[
+{"employee_id":"1","name":"Lisset","last_name":"Mejía","phone":"44212884853","email":"lisset_mejia@gmail.com","address":"Av. de las Ciencias S\/N, 76230 Juriquilla, Qro."},
+{"employee_id":"2","name":"Kenia","last_name":"Vázquez","phone":"4427778694","email":"kenia_vaz@gmail.com","address":"Av. de las Ciencias S\/N, 76230 Juriquilla, Qro."},
+{"employee_id":"3","name":"Daniela","last_name":"Santos","phone":"4425972947","email":"daniela_santos@gmail.com","address":"Av. de las Ciencias S\/N, 76230 Juriquilla, Qro."}
+]
+}
+]

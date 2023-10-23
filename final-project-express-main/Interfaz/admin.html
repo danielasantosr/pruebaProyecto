@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">Panel de Administración</h1>
+
+        <!-- Formulario para agregar empleados -->
+        <div class="mt-4">
+            <h2>Agregar Empleado</h2>
+            <form id="addEmployeeForm">
+                <div class="form-group">
+                    <label for="name">Nombre:</label>
+                    <input type="text" class="form-control" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Apellido:</label>
+                    <input type="text" class="form-control" id="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Teléfono:</label>
+                    <input type="text" class="form-control" id="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Correo electrónico:</label>
+                    <input type="email" class="form-control" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Dirección:</label>
+                    <input type="text" class="form-control" id="address" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Agregar Empleado</button>
+            </form>
+        </div>
+
+        <!-- Formulario para modificar empleado por ID -->
+        <div class="mt-4">
+            <h2>Modificar Empleado</h2>
+            <form id="updateEmployeeForm">
+                <div class="form-group">
+                    <label for="employeeId">ID del Empleado:</label>
+                    <input type="number" class="form-control" id="employeeId" required>
+                </div>
+                <div class="form-group">
+                    <label for="newName">Nuevo Nombre:</label>
+                    <input type="text" class="form-control" id="newName" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Modificar Empleado</button>
+            </form>
+        </div>
+
+        <!-- Formulario para eliminar empleado por ID -->
+        <div class="mt-4">
+            <h2>Eliminar Empleado</h2>
+            <form id="deleteEmployeeForm">
+                <div class="form-group">
+                    <label for="deleteEmployeeId">ID del Empleado a Eliminar:</label>
+                    <input type="number" class="form-control" id="deleteEmployeeId" required>
+                </div>
+                <button type="submit" class="btn btn-danger">Eliminar Empleado</button>
+            </form>
+        </div>
+
+        <!-- Formulario para buscar empleado por nombre -->
+        <div class="mt-4">
+            <h2>Buscar Empleado por Nombre</h2>
+            <form id="searchEmployeeForm">
+                <div class="form-group">
+                    <label for="searchName">Nombre del Empleado:</label>
+                    <input type="text" class="form-control" id="searchName" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Buscar Empleado</button>
+            </form>
+        </div>
+
+        <!-- Resultados de las operaciones -->
+        <div class="mt-4" id="result"></div>
+    </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        // Agregar empleado
+        document.getElementById('addEmployeeForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const lastName = document.getElementById('lastName').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const address = document.getElementById('address').value;
+
+            // Envía los datos al servidor para agregar el empleado
+            axios.post('/api/addEmployee', { name, lastName, phone, email, address })
+                .then(function (response) {
+                    document.getElementById('result').innerText = response.data.message;
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        });
+
+        // Modificar empleado
+        document.getElementById('updateEmployeeForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const employeeId = document.getElementById('employeeId').value;
+            const newName = document.getElementById('newName').value;
+
+            // Envía los datos al servidor para modificar el empleado
+            axios.put(`/api/updateEmployee/${employeeId}`, { name: newName })
+                .then(function (response) {
+                    document.getElementById('result').innerText = response.data.message;
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        });
+
+        // Eliminar empleado
+        document.getElementById('deleteEmployeeForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const deleteEmployeeId = document.getElementById('deleteEmployeeId').value;
+
+            // Envía la solicitud al servidor para eliminar el empleado
+            axios.delete(`/api/deleteEmployee/${deleteEmployeeId}`)
+                .then(function (response) {
+                    document.getElementById('result').innerText = response.data.message;
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        });
+
+        // Buscar empleado por nombre
+        document.getElementById('searchEmployeeForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const searchName = document.getElementById('searchName').value;
+
+            // Envía la solicitud al servidor para buscar empleados por nombre
+            axios.get(`/api/searchEmployee/${searchName}`)
+                .then(function (response) {
+                    document.getElementById('result').innerText = JSON.stringify(response.data, null, 2);
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        });
+    </script>
+</body>
+</html>
+
+
